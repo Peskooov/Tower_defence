@@ -1,0 +1,40 @@
+using UnityEngine;
+using SpaceShooter;
+using UnityEngine.UI;
+using System;
+using UnityEngine.SocialPlatforms.Impl;
+
+namespace TowerDefence
+{
+    public class MapLevel : MonoBehaviour
+    {
+        [SerializeField] private RectTransform m_ResultPanel;
+        [SerializeField] private Image[] m_ResultImages;
+
+        [SerializeField] private Episode m_Episode;
+
+        public bool IsComplete 
+        { get 
+            { return m_ResultPanel.gameObject.activeSelf &&
+                     gameObject.activeSelf; } 
+        }
+
+        public void LoadLevel()
+        {
+            LevelSequenceController.Instance.StartEpisode(m_Episode);
+        }
+
+        public int Initialise()
+        {
+           var score = MapCompletion.Instance.GetEpisodeScore(m_Episode);
+              
+            m_ResultPanel.gameObject.SetActive(score > 0);
+            for (int i = 0; i < score; i++)
+            {
+                m_ResultImages[i].color = Color.white;
+            }
+
+            return score;
+        }
+    }
+}
